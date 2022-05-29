@@ -26,6 +26,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class MyDogsActivity extends AppCompatActivity implements RecyclerItemTou
     private LinkedList<Dog> dogsRVList;
     private DogRVListAdapter mAdapter;
     private LinearLayout coordinatorLayout;
+    private Button instructionPageButton;
     //private static Uri PhotoURI = null;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -64,6 +66,7 @@ public class MyDogsActivity extends AppCompatActivity implements RecyclerItemTou
         setContentView(R.layout.activity_my_dogs);
         addDogFab =  findViewById(R.id.add_dog);
         addDogText = findViewById(R.id.addDogs);
+        instructionPageButton=findViewById(R.id.button5);
         addDogFab.setOnTouchListener(new View.OnTouchListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -76,7 +79,9 @@ public class MyDogsActivity extends AppCompatActivity implements RecyclerItemTou
                 }
                 return true;
             }
+
         });
+
 
         recyclerView = findViewById(R.id.recycler_view);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
@@ -91,6 +96,12 @@ public class MyDogsActivity extends AppCompatActivity implements RecyclerItemTou
         // add pass ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT as param
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+        instructionPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyDogsActivity.this, InstructionPageActivity.class));
+            }
+        });
         dogsRVLoadData();
     }
 
@@ -126,7 +137,9 @@ public class MyDogsActivity extends AppCompatActivity implements RecyclerItemTou
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, GALLERY_REQUEST);
     }
+private void instructionPageButton(View view){
 
+}
     private void takePicture() {
         Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -308,4 +321,5 @@ public class MyDogsActivity extends AppCompatActivity implements RecyclerItemTou
             addDogText.setVisibility(View.INVISIBLE);
         }
     }
+
 }
